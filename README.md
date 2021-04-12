@@ -1,6 +1,9 @@
 # FFmpegVideoCompressor
 Compress videos without reducing quality using FFmpeg
 
+APP SCREENSHOTS:
+
+![Alt text](https://github.com/cvivek07/FFmpegVideoCompressor/blob/master/screenshots/device-2021-04-12-150807.png?raw=true "Optional Title")
 
 How to
 
