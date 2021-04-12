@@ -170,7 +170,5 @@ class MainActivity : AppCompatActivity() {
 }
 
 
-// 281 MB to 46 MB (62 seconds)
-// 19 MB to 2 MB (11 seconds)
-// 65 MB to 18 MB (30 seconds)
-// 2.1 GB to
+
+
