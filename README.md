@@ -30,5 +30,5 @@ Add it in your root build.gradle at the end of repositories:
   Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.cvivek07:FFmpegVideoCompressor:Tag'
+	        implementation 'com.github.cvivek07:FFmpegVideoCompressor:0.1.0'
 	}
