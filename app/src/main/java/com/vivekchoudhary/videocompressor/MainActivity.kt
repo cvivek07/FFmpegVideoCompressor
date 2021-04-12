@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.vivekchoudhary.ffmpegcompressor.VideoCompression
+import com.vivekchoudhary.ffmpegcompressor.VideoUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -110,13 +111,16 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun startCompressing() {
+        outputPath.text = "COMPRESSED FILE PATH:"
         VideoCompression(context = this@MainActivity).startCompressing(selectedFilePath, object : VideoCompression.CompressionListener {
                 override fun compressionFinished(
                         status: Int,
                         isVideo: Boolean,
                         fileOutputPath: String?
                 ) {
-                    runOnUiThread { outputPath.text = "COMPRESSED FILE PATH: \n" + fileOutputPath }
+                    runOnUiThread {
+                        val filesize = VideoUtils.getFileSizeInMb(fileOutputPath)
+                        outputPath.text = "COMPRESSED FILE PATH: \n" + fileOutputPath + " (" + filesize + " MB)"}
 
                 }
 
@@ -143,7 +147,8 @@ class MainActivity : AppCompatActivity() {
                 filemanagerstring = selectedImageUri?.getPath()
                 // MEDIA GALLERY
                 selectedFilePath = getPath(selectedImageUri)
-                videoFilePath.text = "VIDEO FILE SELECTED: \n " + selectedFilePath
+                val filesize = VideoUtils.getFileSizeInMb(selectedFilePath)
+                videoFilePath.text = "VIDEO FILE SELECTED: \n " + selectedFilePath + " (" + filesize + " MB)"
                 Log.d(TAG, "onActivityResult: $selectedFilePath")
             }
         }
@@ -164,3 +169,8 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+
+// 281 MB to 46 MB (62 seconds)
+// 19 MB to 2 MB (11 seconds)
+// 65 MB to 18 MB (30 seconds)
+// 2.1 GB to

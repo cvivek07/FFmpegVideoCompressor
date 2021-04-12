@@ -109,49 +109,6 @@ object VideoUtils {
         }
     }
 
-    fun getFileSizeInMb(file: File?): Long {
-        file?.run {
-            val fileSizeInBytes = file.length()
-            val fileSizeInKB = fileSizeInBytes / 1024
-            //file size in mb
-            return fileSizeInKB / 1024
-        }
-        return 0
-    }
-
-    private fun storeImage(context: Context, image: File) {
-        val pictureFile: File = getOutputMediaFile(context) ?: return
-        try {
-            val output = FileOutputStream(pictureFile)
-            val input = FileInputStream(image)
-            val inputChannel: FileChannel = input.channel
-            val outputChannel: FileChannel = output.channel
-            inputChannel.transferTo(0, inputChannel.size(), outputChannel)
-            output.close()
-            input.close()
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun getOutputMediaFile(context: Context): File? {
-
-
-        val dirPath: String =
-            context.getExternalFilesDir(null)?.absolutePath.toString() + "/urfeed/"
-
-        val dir = File(dirPath)
-
-        if (!dir.exists()) {
-            dir.mkdir()
-        }
-
-        val filePath = dirPath + System.currentTimeMillis() + ".gif";
-
-        return File(filePath)
-    }
 
     fun getFileSizeInMb(path: String?): Int {
         val outputFile = File(path)
@@ -161,30 +118,6 @@ object VideoUtils {
         return fileSizeInMB.toInt()
     }
 
-    fun saveImage(image: Bitmap, storageDir: File, imageFileName: String): String? {
-        if (!storageDir.exists()) {
-            storageDir.mkdir()
-        }
 
-        val imageFile = File(storageDir, imageFileName)
-        val savedImagePath = imageFile.absolutePath
-        try {
-            val fOut: OutputStream = FileOutputStream(imageFile)
-            image.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
-            fOut.close()
-
-
-            return savedImagePath;
-//                Toast.makeText(this@MainActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
-        } catch (e: java.lang.Exception) {
-//                Toast.makeText(this@MainActivity, "Error while saving image!", Toast.LENGTH_SHORT)
-//                    .show()
-//            e.logException()
-            e.printStackTrace()
-        }
-
-        return null
-
-    }
 
 }

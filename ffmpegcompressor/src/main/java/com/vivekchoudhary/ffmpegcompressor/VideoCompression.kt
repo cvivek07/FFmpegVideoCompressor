@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.MediaMetadataRetriever
 import android.os.Environment
 import android.util.Log
-import android.widget.Toast
 import com.arthenica.mobileffmpeg.Config
 import com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS
 import java.io.File
