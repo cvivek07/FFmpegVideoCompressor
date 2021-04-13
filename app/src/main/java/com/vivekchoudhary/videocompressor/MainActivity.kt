@@ -2,12 +2,12 @@ package com.vivekchoudhary.videocompressor
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                 val selectedImageUri: Uri? = data?.data
                 filemanagerstring = selectedImageUri?.getPath()
                 // MEDIA GALLERY
-                selectedFilePath = getPath(selectedImageUri)
+                selectedFilePath = selectedImageUri?.let { FileUtils.getPath(this, it) }
                 val filesize = VideoUtils.getFileSizeInMb(selectedFilePath)
                 videoFilePath.text = "VIDEO FILE SELECTED: \n " + selectedFilePath + " (" + filesize + " MB)"
                 Log.d(TAG, "onActivityResult: $selectedFilePath")
@@ -154,19 +154,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getPath(uri: Uri?): String? {
-        val projection =
-                arrayOf(MediaStore.Video.Media.DATA)
-        val cursor: Cursor? = contentResolver.query(uri!!, projection, null, null, null)
-        return if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
-            val column_index: Int = cursor
-                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
-            cursor.moveToFirst()
-            cursor.getString(column_index)
-        } else null
-    }
+
 }
 
 
